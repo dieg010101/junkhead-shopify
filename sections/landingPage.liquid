@@ -1,0 +1,240 @@
+{% comment %}
+  Junkhead landing page. No scroll with scrolling sidebar and bottom item information overlay.
+{% endcomment %}
+
+{{ 'landingPage.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'landingPage.js' | asset_url }}" defer></script>
+
+{%- assign chosen_collection = section.settings.collection -%}
+{%- if chosen_collection == blank -%}
+  {%- assign chosen_collection = collections['all'] -%}
+{%- endif -%}
+
+{%- assign size_chart_page_handle = section.settings.size_chart_page -%}
+{%- assign size_chart_page = blank -%}
+{%- if size_chart_page_handle != blank -%}
+  {%- assign size_chart_page = pages[size_chart_page_handle] -%}
+{%- endif -%}
+
+<section class="jh" data-jh>
+  <a class="jh__logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}</a>
+
+  <div class="jh__grid">
+    <div class="jh__stage">
+      <div class="jh__hero" aria-label="Product hero">
+        <img class="jh__heroImg" data-hero-base alt="" />
+        <img class="jh__heroOverlayImg" data-hero-overlay alt="" />
+
+        <button class="jh__tri jh__tri--left" type="button" data-prev aria-label="Previous product">
+          <span class="jh__srOnly">previous product</span>
+        </button>
+
+        <button class="jh__tri jh__tri--right" type="button" data-next aria-label="Next product">
+          <span class="jh__srOnly">next product</span>
+        </button>
+
+        <div class="jh__overlayPanel" aria-label="Item information">
+          <div class="jh__overlayLeft">
+            <h2 class="jh__infoTitle">Item Information:</h2>
+            <div class="jh__infoGrid" data-info>
+              <div class="jh__infoCol" data-info-col-1></div>
+              <div class="jh__infoCol" data-info-col-2></div>
+
+              <div class="jh__infoCol jh__infoCol--meta">
+                <div class="jh__metaTitle" data-title>{{ section.settings.default_title }}</div>
+                <div class="jh__metaPrice" data-price>{{ section.settings.default_price }}</div>
+                <div class="jh__sizes" data-sizes></div>
+              </div>
+
+              <div class="jh__infoCol jh__infoCol--shipping">
+                <div class="jh__shipLine">{{ section.settings.lead_time_text }}</div>
+                <div class="jh__shipLine">{{ section.settings.free_shipping_text }}</div>
+
+                <button
+                  class="jh__sizeChartBtn"
+                  type="button"
+                  data-sizechart-open
+                  {% if size_chart_page == blank and section.settings.size_chart_fallback_html == blank %}
+                    disabled
+                    aria-disabled="true"
+                  {% endif %}
+                >
+                  View Sizing Chart
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="jh__overlayRight">
+            <div class="jh__actions">
+              <button class="jh__action" type="button" data-add-to-cart>add to cart</button>
+              <button class="jh__action" type="button" data-cart-open>cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="jh__dropzone" data-dropzone aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <aside class="jh__rail" aria-label="Right panel">
+      <div class="jh__railInner" data-rail>
+        {%- if chosen_collection != blank -%}
+          {%- for product in chosen_collection.products limit: section.settings.max_products -%}
+            {%- assign v = product.selected_or_first_available_variant -%}
+            <button
+              class="jh__thumb"
+              type="button"
+              draggable="true"
+              data-thumb
+              data-index="{{ forloop.index0 }}"
+              data-variant-id="{{ v.id }}"
+              aria-label="{{ product.title | escape }}"
+            >
+              {%- if product.featured_image != blank -%}
+                {{ product.featured_image
+                  | image_url: width: 700
+                  | image_tag:
+                      loading: 'lazy',
+                      class: 'jh__thumbImg',
+                      alt: product.title
+                }}
+              {%- else -%}
+                <span class="jh__thumbFallback">X</span>
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <div class="jh__cart" data-cart hidden aria-label="Cart">
+        <div class="jh__cartHeader">
+          <div class="jh__cartTitle">Cart</div>
+          <button type="button" class="jh__cartClose" data-cart-close aria-label="Close cart">×</button>
+        </div>
+
+        <div class="jh__cartBody" data-cart-items></div>
+
+        <div class="jh__cartFooter">
+          <div class="jh__cartSubtotal">
+            Subtotal: <span data-cart-subtotal>—</span>
+          </div>
+
+          <!-- IMPORTANT: this is where the message shows -->
+          <div class="jh__cartNotice" data-cart-notice hidden aria-live="polite"></div>
+
+          <a class="jh__cartCheckout" href="/checkout">Checkout</a>
+
+          <button class="jh__cartBack" type="button" data-cart-back>
+            Back to products
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="jh__modal" data-sizechart-modal hidden aria-hidden="true">
+    <div class="jh__modalBackdrop" data-sizechart-close></div>
+
+    <div class="jh__modalDialog" role="dialog" aria-modal="true" aria-label="Sizing chart">
+      <div class="jh__modalHeader">
+        <div class="jh__modalTitle">Sizing Chart</div>
+        <button class="jh__modalClose" type="button" data-sizechart-close aria-label="Close sizing chart">×</button>
+      </div>
+
+      <div class="jh__modalBody">
+        {%- if size_chart_page != blank -%}
+          {{ size_chart_page.content }}
+        {%- elsif section.settings.size_chart_fallback_html != blank -%}
+          {{ section.settings.size_chart_fallback_html }}
+        {%- else -%}
+          <p>No size chart has been configured.</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-products-json>
+  [
+    {%- if chosen_collection != blank -%}
+      {%- for product in chosen_collection.products limit: section.settings.max_products -%}
+        {%- assign v = product.selected_or_first_available_variant -%}
+
+        {%- assign model_info_val = '' -%}
+        {%- if product.metafields.custom.model_info != blank -%}
+          {%- assign model_info_val = product.metafields.custom.model_info.value -%}
+        {%- endif -%}
+
+        {%- assign cat_sizes = blank -%}
+        {%- assign size_mf = product.metafields.shopify.size -%}
+        {%- if size_mf == blank -%}
+          {%- assign size_mf = product.metafields.shopify.sizes -%}
+        {%- endif -%}
+        {%- if size_mf != blank -%}
+          {%- assign cat_sizes = size_mf.value -%}
+        {%- endif -%}
+
+        {
+          "id": {{ product.id }},
+          "handle": {{ product.handle | json }},
+          "title": {{ product.title | json }},
+          "variantId": {{ v.id }},
+          "available": {{ v.available | json }},
+          "priceText": {{ v.price | money | json }},
+          "images": [
+            {%- for image in product.images -%}
+              {{ image | image_url: width: 2400 | json }}{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ],
+          "optionNames": {{ product.options | json }},
+          "variants": [
+            {%- for variant in product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "available": {{ variant.available | json }},
+                "priceText": {{ variant.price | money | json }},
+                "options": {{ variant.options | json }},
+                "inventoryManagement": {{ variant.inventory_management | json }},
+                "inventoryPolicy": {{ variant.inventory_policy | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ],
+          "sizes": [
+            {%- if cat_sizes != blank -%}
+              {%- for s in cat_sizes -%}
+                {{ s | json }}{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          ],
+          "descriptionHtml": {{ product.description | json }},
+          "modelInfo": {{ model_info_val | default: '' | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endif -%}
+  ]
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Onepage",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "Junkhead" },
+
+    { "type": "collection", "id": "collection", "label": "Collection to show" },
+    { "type": "range", "id": "max_products", "label": "Max products", "min": 1, "max": 30, "step": 1, "default": 12 },
+
+    { "type": "text", "id": "default_title", "label": "Default title", "default": "Select a product" },
+    { "type": "text", "id": "default_price", "label": "Default price text", "default": "—" },
+
+    { "type": "text", "id": "lead_time_text", "label": "Lead time text (static)", "default": "Please note that the lead time on this garment is between 7 to 14 days." },
+    { "type": "text", "id": "free_shipping_text", "label": "Free shipping text (static)", "default": "Free shipping is available on all domestic orders." },
+
+    { "type": "page", "id": "size_chart_page", "label": "Sizing chart page" },
+    { "type": "richtext", "id": "size_chart_fallback_html", "label": "Sizing chart fallback (if no page)", "default": "<p>Add a size chart page in this section settings, or paste fallback content here.</p>" }
+  ],
+  "presets": [
+    { "name": "Landing Onepage" }
+  ]
+}
+{% endschema %}

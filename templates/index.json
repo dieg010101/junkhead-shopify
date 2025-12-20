@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "landing_page_main": {
+      "type": "landingPage",
+      "settings": {
+        "logo_text": "Junkhead",
+        "collection": "frontpage",
+        "max_products": 14,
+        "default_title": "Junkhead",
+        "default_price": "—",
+        "lead_time_text": "Please note that the lead time on this garment is between 7 to 14 days.",
+        "free_shipping_text": "Free shipping is available on all domestic orders.",
+        "size_chart_page": "data-sharing-opt-out",
+        "size_chart_fallback_html": "<p>Add a size chart page in this section settings, or paste fallback content here.</p>"
+      }
+    }
+  },
+  "order": [
+    "landing_page_main"
+  ]
+}
