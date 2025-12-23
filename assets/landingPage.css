@@ -25,7 +25,7 @@ body { overflow: hidden; }
 :root{
   --jh-bg: #111;
   --jh-rail: #d9d9d9;
-  --jh-rail-border: rgba(0,0,0,0.55);
+  --jh-rail-border: rgba(255, 255, 255,0.92);
 
   --jh-text: rgba(255,255,255,0.92);
   --jh-accent: #b6c350;
@@ -154,7 +154,6 @@ body { overflow: hidden; }
   background: var(--jh-overlay);
   overflow: visible;
 
-  /* REMOVE blur from base */
   backdrop-filter: none;
 }
 
@@ -165,7 +164,7 @@ body { overflow: hidden; }
   inset: 0;
   z-index: -1;
 
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(1px);
 
   /* Fade blur upward */
   -webkit-mask-image: linear-gradient(
@@ -184,7 +183,7 @@ body { overflow: hidden; }
   pointer-events: none;
 }
 
-.jh__overlayLeft { min-width: 0; }
+.jh__overlayLeft { min-width: 0; text-shadow: 0px 1px 5px rgba(0,0,0, 0.7);}
 .jh__overlayRight { justify-self: end; align-self: end; }
 
 /* "Item Information:" title (Diploma) */
@@ -347,7 +346,7 @@ body { overflow: hidden; }
 /* Right rail */
 .jh__rail {
   height: 100vh;
-  border-left: 2px solid rgba(0,0,0,0.65);
+  border-left: 2px solid rgba(255, 255, 255,0.92);
   background: var(--jh-rail);
   overflow: hidden;
   position: relative;
@@ -398,7 +397,7 @@ body { overflow: hidden; }
 }
 
 .jh__thumb.is-active {
-  outline: 3px solid rgba(0,0,0,0.65);
+  outline: 3px solid rgba(0,0,0,0.45);
   outline-offset: -3px;
 }
 
@@ -614,7 +613,7 @@ body { overflow: hidden; }
   .jh__rail {
     height: 180px;
     border-left: 0;
-    border-top: 2px solid rgba(0,0,0,0.65);
+    border-top: 2px solid rgba(255, 255, 255,0.92);
   }
 
   .jh__railInner {
@@ -704,6 +703,7 @@ body { overflow: hidden; }
     column-gap: 12px;
     row-gap: px;
     align-items: center;
+    
   }
 
   .jh__metaTitle {
