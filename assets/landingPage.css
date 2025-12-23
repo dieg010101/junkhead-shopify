@@ -150,11 +150,38 @@ body { overflow: hidden; }
   grid-template-columns: minmax(0, 1fr) max-content;
   column-gap: 25px;
 
-  padding: 18px 18px 18px;
+  padding: 18px;
   background: var(--jh-overlay);
-  backdrop-filter: blur(2px);
   overflow: visible;
 
+  /* REMOVE blur from base */
+  backdrop-filter: none;
+}
+
+/* Blur layer */
+.jh__overlayPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  backdrop-filter: blur(6px);
+
+  /* Fade blur upward */
+  -webkit-mask-image: linear-gradient(
+    to top,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 100%
+  );
+
+  pointer-events: none;
 }
 
 .jh__overlayLeft { min-width: 0; }
