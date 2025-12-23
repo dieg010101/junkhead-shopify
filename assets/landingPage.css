@@ -165,7 +165,7 @@ body { overflow: hidden; }
   inset: 0;
   z-index: -1;
 
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
 
   /* Fade blur upward */
   -webkit-mask-image: linear-gradient(
