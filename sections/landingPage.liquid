@@ -35,7 +35,7 @@
 
         <div class="jh__overlayPanel" aria-label="Item information">
           <div class="jh__overlayLeft">
-            <h2 class="jh__infoTitle">Item Information:</h2>
+            
             <div class="jh__infoGrid" data-info>
               <div class="jh__infoCol" data-info-col-1></div>
               <div class="jh__infoCol" data-info-col-2></div>
@@ -68,7 +68,7 @@
           <div class="jh__overlayRight">
             <div class="jh__actions">
               <button class="jh__action" type="button" data-add-to-cart>add to cart</button>
-              <button class="jh__action" type="button" data-cart-open>cart</button>
+              <button class="jh__action" type="button" data-cart-open>view cart</button>
             </div>
           </div>
         </div>
@@ -119,6 +119,8 @@
           <div class="jh__cartSubtotal">
             Subtotal: <span data-cart-subtotal>—</span>
           </div>
+
+          <!-- IMPORTANT: this is where the message shows -->
           <div class="jh__cartNotice" data-cart-notice hidden aria-live="polite"></div>
 
           <a class="jh__cartCheckout" href="/checkout">Checkout</a>

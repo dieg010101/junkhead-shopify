@@ -1,5 +1,15 @@
+/* ============================================================
+   Junkhead landing page styles
+   Fonts:
+   - Diploma (uploaded asset: diploma.ttf)
+   - Roboto Mono (Google Fonts)
+   IMPORTANT: This file must be landingPage.css.liquid
+============================================================ */
+
+/* Roboto Mono (Google) */
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap");
 
+/* Diploma (uploaded to Shopify Assets as diploma.ttf) */
 @font-face {
   font-family: "Diploma";
   src: url("{{ 'diploma.ttf' | asset_url }}") format("truetype");
@@ -8,27 +18,26 @@
   font-display: swap;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  overflow: hidden;
-}
+/* Make the page non-scrolling; only the right panel scrolls */
+html, body { height: 100%; }
+body { overflow: hidden; }
 
-:root {
+:root{
   --jh-bg: #111;
   --jh-rail: #d9d9d9;
-  --jh-rail-border: rgba(0, 0, 0, 0.55);
-  --jh-overlay: rgba(0, 0, 0, 0.65);
-  --jh-text: rgba(255, 255, 255, 0.92);
+  --jh-rail-border: rgba(0,0,0,0.55);
+  --jh-overlay: rgba(0,0,0,0.65);
+  --jh-text: rgba(255,255,255,0.92);
   --jh-accent: #b6c350;
 
+  /* Diploma for headline elements */
   --jh-gothic: "Diploma", serif;
-  --jh-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Roboto Mono for everything else */
+  --jh-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
 }
 
+/* Root */
 .jh {
   height: 100vh;
   width: 100vw;
@@ -37,6 +46,7 @@ body {
   background: var(--jh-bg);
 }
 
+/* Logo (Diploma) */
 .jh__logo {
   position: absolute;
   top: 18px;
@@ -47,19 +57,17 @@ body {
   font-size: 64px;
   line-height: 1;
   font-family: var(--jh-gothic);
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 2px 18px rgba(0,0,0,0.55);
 }
 
+/* Layout */
 .jh__grid {
   display: grid;
   grid-template-columns: 1fr 260px;
   height: 100vh;
 }
 
-.jh__stage {
-  height: 100vh;
-  position: relative;
-}
+.jh__stage { height: 100vh; position: relative; }
 
 .jh__hero {
   position: relative;
@@ -84,13 +92,14 @@ body {
   pointer-events: none;
 }
 
-.jh__dropzone {
+.jh__dropzone{
   position: absolute;
   inset: 0;
   z-index: 5;
   pointer-events: none;
 }
 
+/* Large hero navigation triangles (left/right) */
 .jh__tri {
   position: absolute;
   top: 50%;
@@ -101,7 +110,8 @@ body {
   border-style: solid;
   background: transparent;
   cursor: pointer;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45));
+  opacity: 0;
 }
 
 .jh__tri--left {
@@ -123,11 +133,12 @@ body {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0,0,0,0);
   white-space: nowrap;
   border: 0;
 }
 
+/* Bottom overlay */
 .jh__overlayPanel {
   position: absolute;
   left: 0;
@@ -137,126 +148,123 @@ body {
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
-  column-gap: 36px;
+  column-gap: 25px;
 
-  padding: 18px 18px 16px;
+  padding: 18px 18px 18px;
   background: var(--jh-overlay);
   backdrop-filter: blur(2px);
   overflow: visible;
+
 }
 
-.jh__overlayLeft {
-  min-width: 0;
-}
-.jh__overlayRight {
-  justify-self: end;
-  align-self: end;
-}
+.jh__overlayLeft { min-width: 0; }
+.jh__overlayRight { justify-self: end; align-self: end; }
 
+/* "Item Information:" title (Diploma) */
 .jh__infoTitle {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: #fff;
-  font-size: 45px;
+  font-size: 44px;
   line-height: 0.95;
-  font-family: var(--jh-gothic);
+  /* font-family: var(--jh-gothic); */
   letter-spacing: 0.2px;
 }
 
+/* The 4 columns of overlay text (Roboto Mono) */
 .jh__infoGrid {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1.15fr 1.15fr;
-  gap: 40px;
-
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 38px;
   color: var(--jh-text);
   font-family: var(--jh-mono);
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.4;
   align-items: start;
   min-width: 0;
 }
 
-.jh__infoCol {
-  min-width: 0;
-}
-.jh__infoCol > div {
-  margin: 2px 0;
-}
+.jh__infoCol { min-width: 0; }
+.jh__infoCol > div { margin: 2px 0;}
 
-.jh__metaTitle {
+/* Product meta column (still 12px, Roboto Mono) */
+.jh__metaTitle{
   color: #fff;
   font-family: var(--jh-mono);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  padding-bottom: 10px;
 }
 
-.jh__metaPrice {
+.jh__metaPrice{
   color: #fff;
   font-family: var(--jh-mono);
-  font-size: 12px;
-  opacity: 0.95;
-  margin-bottom: 10px;
+  font-size: 15px;
+  padding-bottom: 10px;
 }
 
-.jh__sizes {
+/* Sizes (Roboto Mono) */
+.jh__sizes{
   display: flex;
   flex-wrap: wrap;
   gap: 10px 18px;
   align-items: center;
 }
 
-.jh__sizeBtn {
+.jh__sizeBtn{
   appearance: none;
   border: 0;
   background: transparent;
   padding: 0;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255,255,255,0.92);
   font-family: var(--jh-mono);
   font-size: 12px;
 }
 
-.jh__sizeBtn:hover {
+.jh__sizeBtn:hover{
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.jh__sizeBtn.is-active {
+.jh__sizeBtn.is-active{
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.jh__sizeBtn.is-soldout {
+.jh__sizeBtn.is-soldout{
   opacity: 0.45;
   cursor: not-allowed;
   text-decoration: line-through;
 }
 
-.jh__shipLine {
-  margin: 2px 0;
-}
+/* Shipping column (Roboto Mono) */
+.jh__shipLine { 
+  font-size: 9px;
+ }
 
-.jh__sizeChartBtn {
+.jh__sizeChartBtn{
   margin-top: 6px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255,255,255,0.92);
   font-family: var(--jh-mono);
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-align: left;
 }
 
-.jh__sizeChartBtn[disabled] {
+.jh__sizeChartBtn[disabled]{
   opacity: 0.5;
   cursor: not-allowed;
 }
 
+/* Actions (Diploma) */
 .jh__actions {
   display: grid;
   gap: 14px;
@@ -273,18 +281,19 @@ body {
   cursor: pointer;
 
   font-family: var(--jh-gothic);
-  font-size: 50px;
+  font-size: 40px;
   line-height: 0.95;
 
   position: relative;
-  padding-left: 62px;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+  padding-left: 40px;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.45);
 }
 
-.jh__action::before {
+/* Hover triangle next to actions */
+.jh__action::before{
   content: "";
   position: absolute;
-  left: 14px;
+  left: 1px;
   top: 50%;
   transform: translateY(-50%);
   width: 0;
@@ -298,19 +307,20 @@ body {
   transition: opacity 120ms ease, transform 120ms ease;
 }
 
-.jh__action:hover::before {
+.jh__action:hover::before{
   opacity: 1;
   transform: translateY(-50%) translateX(2px);
 }
 
-.jh__action:hover {
+.jh__action:hover{
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
+/* Right rail */
 .jh__rail {
   height: 100vh;
-  border-left: 2px solid rgba(0, 0, 0, 0.65);
+  border-left: 2px solid rgba(0,0,0,0.65);
   background: var(--jh-rail);
   overflow: hidden;
   position: relative;
@@ -324,6 +334,7 @@ body {
   flex-direction: column;
 }
 
+/* Square thumbs that never shrink */
 .jh__thumb {
   display: block;
   width: 100%;
@@ -360,20 +371,16 @@ body {
 }
 
 .jh__thumb.is-active {
-  outline: 3px solid rgba(0, 0, 0, 0.65);
+  outline: 3px solid rgba(0,0,0,0.65);
   outline-offset: -3px;
 }
 
-.jh.is-cartOpen [data-rail] {
-  display: none;
-}
-.jh.is-cartOpen [data-cart] {
-  display: flex;
-}
-[data-cart] {
-  display: none;
-}
+/* Swap mode */
+.jh.is-cartOpen [data-rail] { display: none; }
+.jh.is-cartOpen [data-cart] { display: flex; }
+[data-cart] { display: none; }
 
+/* Cart panel */
 .jh__cart {
   height: 100%;
   flex-direction: column;
@@ -386,7 +393,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 14px 14px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+  border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
 .jh__cartTitle {
@@ -413,7 +420,7 @@ body {
 
 .jh__cartFooter {
   padding: 12px 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(0,0,0,.35);
   display: grid;
   gap: 10px;
 }
@@ -424,26 +431,25 @@ body {
   font-family: var(--jh-mono);
 }
 
-.jh__cartNotice {
+/* Cart notice */
+.jh__cartNotice{
   font-family: var(--jh-mono);
   font-size: 12px;
   line-height: 1.35;
-  color: rgba(17, 17, 17, 0.82);
+  color: rgba(17,17,17,0.82);
 
   padding: 8px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.14);
-  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(0,0,0,0.14);
+  background: rgba(255,255,255,0.35);
   border-radius: 10px;
 }
-.jh__cartNotice[hidden] {
-  display: none;
-}
+.jh__cartNotice[hidden]{ display: none; }
 
 .jh__cartCheckout {
   display: block;
   text-align: center;
   padding: 12px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0,0,0,.55);
   text-decoration: none;
   color: #111;
   background: #eee;
@@ -461,13 +467,14 @@ body {
   font-family: var(--jh-mono);
 }
 
+/* Cart rows */
 .jh__cartRow {
   display: grid;
   grid-template-columns: 56px 1fr auto;
   gap: 10px;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0,0,0,.2);
 }
 
 .jh__cartImg {
@@ -509,20 +516,21 @@ body {
   font-family: var(--jh-mono);
 }
 
-.jh__modal {
+/* Size chart modal */
+.jh__modal{
   position: fixed;
   inset: 0;
   z-index: 200;
   font-family: var(--jh-mono);
 }
 
-.jh__modalBackdrop {
+.jh__modalBackdrop{
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0,0,0,0.65);
 }
 
-.jh__modalDialog {
+.jh__modalDialog{
   position: relative;
   z-index: 2;
   width: min(860px, calc(100vw - 40px));
@@ -536,21 +544,21 @@ body {
   grid-template-rows: auto 1fr;
 }
 
-.jh__modalHeader {
+.jh__modalHeader{
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 14px 14px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 
-.jh__modalTitle {
+.jh__modalTitle{
   font-family: var(--jh-mono);
   font-size: 14px;
   font-weight: 800;
 }
 
-.jh__modalClose {
+.jh__modalClose{
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -558,7 +566,7 @@ body {
   line-height: 1;
 }
 
-.jh__modalBody {
+.jh__modalBody{
   padding: 14px 14px;
   overflow: auto;
   font-family: var(--jh-mono);
@@ -566,24 +574,20 @@ body {
   line-height: 1.45;
 }
 
-/* Mobile styling. */
-@media (max-width: 900px) {
+/* Mobile */
+@media (max-width: 860px) {
   .jh__grid {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 180px;
   }
 
-  .jh__stage {
-    height: calc(100vh - 180px);
-  }
-  .jh__hero {
-    height: calc(100vh - 180px);
-  }
+  .jh__stage { height: calc(100vh - 180px); }
+  .jh__hero { height: calc(100vh - 180px); }
 
   .jh__rail {
     height: 180px;
     border-left: 0;
-    border-top: 2px solid rgba(0, 0, 0, 0.65);
+    border-top: 2px solid rgba(0,0,0,0.65);
   }
 
   .jh__railInner {
@@ -600,28 +604,133 @@ body {
     flex: 0 0 auto;
   }
 
+/* mobile cart */
+  [data-rail] {
+    display: flex !important;
+  }
+
+  .jh.is-cartOpen [data-rail] {
+    display: block;
+  }
+  [data-cart][hidden] {
+    display: block;
+  }
+  
+  [data-cart] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 95vw;
+    z-index: 200;
+    border: solid 1px rgba(0,0,0,0.55);
+
+    transform: translateX(100%);
+    transition: transform 300ms cubic-bezier(.4, 0, .2, 1);
+
+    will-change: transform;
+  }
+
+  .jh.is-cartOpen [data-cart] {
+    transform: translateX(0);
+  }
+  .jh.is-cartOpen {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .jh::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    z-index: 150;
+  }
+
+  .jh.is-cartOpen::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
+/* mobile overlay panel */
+
   .jh__overlayPanel {
+    display: hidden;
     grid-template-columns: 1fr;
     row-gap: 12px;
+    background: none;
+    backdrop-filter: none;
   }
 
+  .jh__overlayRight { justify-self: start; }
+
+  .jh__infoCol--shipping {
+    display: none;
+  }
+  .jh__infoCol--meta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    row-gap: px;
+    align-items: center;
+  }
+
+  .jh__metaTitle {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+
+  .jh__metaPrice {
+    grid-column: 2;
+    grid-row: 1;
+    margin-bottom: 0;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .jh__sizes {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 12px;
+  }
   .jh__overlayRight {
-    justify-self: start;
+  width: 100%;
+  justify-self: stretch;
   }
 
-  .jh__infoTitle {
-    font-size: 44px;
-  }
-  .jh__action {
-    font-size: 44px;
-    padding-left: 56px;
-  }
-  .jh__action::before {
-    border-width: 12px 0 12px 20px;
-  }
+/* Framed cart container */
+.jh__action {
+  width: 100%;
+  border: 1px solid #fff;
+  padding: 10px 16px;
+  display: grid;
+  gap: 10px;
+  /* Stretch across screen */
+  width: 100%;
+}
+.jh__action:hover {
+  text-decoration: none;
+}
+.jh__action:hover::before{
+  display: none;
+}
 
-  .jh__infoGrid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+.jh__tri{
+  display: show;
+}
+  /* Scale down on mobile */
+  .jh__infoTitle { font-size: 30px; }
+  .jh__action { font-size: 12px; font-family: var(--jh-mono); }
+  .jh__action::before{ border-width: 12px 0 12px 20px; }
+
+  .jh__infoGrid { grid-template-columns: 1fr; gap: 12px; }
 }
